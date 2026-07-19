@@ -2,18 +2,11 @@ import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native'
 import {SafeAreaView} from "react-native-safe-area-context";
 import { router } from 'expo-router';
 import React from 'react'
+import {SurveyContext} from "@/contexts/SurveyProvider";
+import { useContext } from 'react';
 
 const Dashboard = () => {
-
-
-  const recentSurveys = [
-    { id: '1', title: 'Survey 1' },
-    { id: '2', title: 'Survey 2' },
-    { id: '3', title: 'Survey 3' },
-    { id: '4', title: 'Survey 4' },
-    { id: '5', title: 'Survey 5' },
-    { id: '6', title: 'Survey 6' },
-  ];
+  const { surveyData } = useContext(SurveyContext);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -24,7 +17,7 @@ const Dashboard = () => {
         <Text style={styles.userName}>BE(CE), SUK</Text>
       </View>
       <View style={styles.surveyCount}>
-        <Text style={styles.surveyCountText}>Survey Count: {recentSurveys.length}</Text>
+        <Text style={styles.surveyCountText}>Survey Count: {surveyData.length}</Text>
       </View>
       <View style={styles.buttonContainer}>
         <Pressable style={styles.button} onPress={() => router.push("/(tabs)/new_survey")}>
@@ -40,7 +33,7 @@ const Dashboard = () => {
       <View style={styles.recentSurveys}>
         <Text style={styles.recentSurveysTitle}>Recent Surveys</Text>
         <FlatList
-          data={recentSurveys}
+          data={surveyData}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
               <Text style={styles.recentSurveyItem}>{item.title}</Text>
